@@ -3,6 +3,9 @@
 ### AI-Powered Interview Preparation Platform
 
 InterviewAI is an AI-powered interview preparation platform that helps candidates practice realistic interviews, receive personalized questions, and improve their answers with AI-generated feedback.
+## 🎥 Demo Video
+
+[▶️ Watch InterviewAI Demo on YouTube](https://youtu.be/P5NjkLpllA4)
 
 ## ✨ Features
 
