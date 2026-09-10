@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function CreateKit() {
     const [company, setCompany] = useState("");
 const [role, setRole] = useState("");
+const [resumeConnected, setResumeConnected] = useState(false);
 const [jobDescription, setJobDescription] = useState("");
 const [generated, setGenerated] = useState(false);
 const [questions, setQuestions] = useState<string[]>([]);
@@ -13,6 +14,14 @@ const [submitted, setSubmitted] = useState(false);
 const [score, setScore] = useState(0);
 const [feedback, setFeedback] = useState<string[]>([]);
 const [timeLeft, setTimeLeft] = useState(20 * 60);
+
+useEffect(() => {
+  const savedResumeSummary = sessionStorage.getItem("resumeSummary");
+
+  if (savedResumeSummary) {
+    setResumeConnected(true);
+  }
+}, []);
 useEffect(() => {
   if (!generated || submitted) return;
 
@@ -35,10 +44,10 @@ const submitInterview = async () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        questions,
-        answers,
-      }),
+    body: JSON.stringify({
+  questions,
+  answers,
+})
     });
 
     const data = await response.json();
@@ -144,6 +153,27 @@ return (
         <p className="text-slate-400 mb-10">
           Tell us about the job you're applying for.
         </p>
+        {resumeConnected ? (
+  <div className="mb-8 bg-green-950/40 border border-green-700 rounded-xl p-4">
+    <p className="text-green-400 font-semibold">
+      📄 Resume connected
+    </p>
+
+    <p className="text-slate-400 text-sm mt-1">
+      Your resume will be used to personalize your interview questions.
+    </p>
+  </div>
+) : (
+  <div className="mb-8 bg-slate-900 border border-slate-700 rounded-xl p-4">
+    <p className="text-slate-300 font-semibold">
+      📄 No resume uploaded
+    </p>
+
+    <p className="text-slate-500 text-sm mt-1">
+      You can still create an interview kit without a resume.
+    </p>
+  </div>
+)}
 
         <div className="space-y-6">
 

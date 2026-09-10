@@ -5,7 +5,13 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const { company, role, jobDescription, technologies } = body;
+    const {
+  company,
+  role,
+  jobDescription,
+  technologies,
+  resumeSummary,
+} = body;
 
     if (!company || !role || !jobDescription) {
       return NextResponse.json(
@@ -34,9 +40,12 @@ ${jobDescription}
 
 Technologies:
 ${technologies?.join(", ") || "Not specified"}
+Resume:
+${resumeSummary || "No resume provided"}
 
 Requirements:
 - Include technical and behavioral questions.
+- Personalize questions using the candidate's resume when available.
 - Make the questions relevant to the role.
 - Use the technologies from the job description.
 - Keep each question clear and concise.
@@ -48,10 +57,21 @@ Requirements:
       apiKey: process.env.GEMINI_API_KEY,
     });
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.7-flash",
-      contents: prompt,
-    });
+    let response;
+
+try {
+  response = await ai.models.generateContent({
+    model: "gemini-3.6-flash",
+    contents: prompt,
+  });
+} catch (error) {
+  console.log("Gemini 3.6 unavailable. Trying Gemini 3.5...");
+
+  response = await ai.models.generateContent({
+    model: "gemini-3.5-flash",
+    contents: prompt,
+  });
+}
 
     const result = response.text || "";
 
