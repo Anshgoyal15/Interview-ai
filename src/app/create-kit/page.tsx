@@ -25,18 +25,19 @@ useEffect(() => {
 useEffect(() => {
   if (!generated || submitted) return;
 
-  if (timeLeft <= 0) {
-    submitInterview();
-    return;
-  }
-
   const timer = setInterval(() => {
-    setTimeLeft((prev) => prev - 1);
+    setTimeLeft((prev) => {
+      if (prev <= 1) {
+        clearInterval(timer);
+        return 0;
+      }
+
+      return prev - 1;
+    });
   }, 1000);
 
   return () => clearInterval(timer);
-}, [generated, submitted, timeLeft]);
-
+}, [generated, submitted]);
 const submitInterview = async () => {
   try {
     const response = await fetch("/api/evaluate-answers", {

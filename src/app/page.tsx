@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [resume, setResume] = useState<File | null>(null);
+  const [showTutorial, setShowTutorial] = useState(false);
   const [resumeSummary, setResumeSummary] = useState("");
 const [analyzingResume, setAnalyzingResume] = useState(false);
 
@@ -66,6 +67,7 @@ alert("Resume analyzed successfully! 🎉");
   };
 
   return (
+    <>
     <main className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
       {/* Futuristic background glow */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -140,7 +142,7 @@ alert("Resume analyzed successfully! 🎉");
     </div>
 
     {/* Navigation */}
-    <div className="hidden md:flex items-center gap-8 text-sm text-slate-300">
+    <div className="hidden md:flex items-center gap-12 text-sm text-slate-300">
       <a
         href="#features"
         className="hover:text-white transition-colors"
@@ -148,12 +150,6 @@ alert("Resume analyzed successfully! 🎉");
         Features
       </a>
 
-      <a
-        href="#how-it-works"
-        className="hover:text-white transition-colors"
-      >
-        How it works
-      </a>
 
       <a
         href="#about"
@@ -185,9 +181,9 @@ alert("Resume analyzed successfully! 🎉");
 </nav>
 
      {/* Hero Section */}
-<section id="how-it-works" className="...">
+<section id="how-it-works" className="pt-20 ...">
 
-  <div className="max-w-7xl mx-auto w-full">
+  <div className="max-w-7xl mx-auto w-full relative top-16">
 
     {/* Hero Content */}
     <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -234,10 +230,11 @@ alert("Resume analyzed successfully! 🎉");
           </Link>
 
           <button
+          onClick={() => setShowTutorial(true)}
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-slate-700 bg-slate-900/70 text-white font-semibold hover:bg-slate-800 transition"
           >
             <span>▶</span>
-            Watch Demo
+            ✨ How It Works
           </button>
 
         </div>
@@ -443,7 +440,7 @@ alert("Resume analyzed successfully! 🎉");
 
 </section>
           {/* Resume Upload */}
-          <div className="max-w-xl mx-auto mb-6">
+          <div className="max-w-xl mx-auto mt-24 mb-6">
             <label
               htmlFor="resume-upload"
               className="block cursor-pointer rounded-3xl border-2 border-dashed border-purple-500/30 bg-slate-900/70 backdrop-blur-xl px-8 py-12 text-center shadow-2xl shadow-purple-900/10 hover:border-purple-400/60 hover:bg-slate-900 transition-all duration-300"
@@ -633,5 +630,105 @@ alert("Resume analyzed successfully! 🎉");
   </p>
 </footer>
     </main>
+  
+    {showTutorial && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+    <div className="w-full max-w-2xl rounded-3xl border border-purple-500/30 bg-slate-950 p-8 shadow-2xl shadow-purple-900/30">
+
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <p className="text-purple-400 text-sm font-semibold">
+            QUICK TUTORIAL
+          </p>
+          <h2 className="text-3xl font-bold text-white mt-1">
+            How InterviewAI Works
+          </h2>
+        </div>
+
+        <button
+          onClick={() => setShowTutorial(false)}
+          className="text-slate-400 hover:text-white text-2xl"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="space-y-4">
+
+        <div className="flex gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+          <span className="text-2xl">📄</span>
+          <div>
+            <h3 className="font-semibold text-white">
+              1. Upload your resume
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              Upload your PDF resume and let AI understand your skills,
+              projects and experience.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+          <span className="text-2xl">🏢</span>
+          <div>
+            <h3 className="font-semibold text-white">
+              2. Enter your interview details
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              Add the company, job role and job description.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+          <span className="text-2xl">🤖</span>
+          <div>
+            <h3 className="font-semibold text-white">
+              3. AI creates your questions
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              InterviewAI generates personalized technical and behavioral
+              questions.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+          <span className="text-2xl">🎤</span>
+          <div>
+            <h3 className="font-semibold text-white">
+              4. Take the interview
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              Answer the questions one by one within the interview timer.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+          <span className="text-2xl">🧠</span>
+          <div>
+            <h3 className="font-semibold text-white">
+              5. Get your AI score
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              Receive scores and useful feedback to improve your answers.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <button
+        onClick={() => setShowTutorial(false)}
+        className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-[1.02] transition-transform rounded-xl py-3 font-semibold text-white"
+      >
+        Got it — Let's Practice 🚀
+      </button>
+
+    </div>
+  </div>
+)}
+</>
   );
 }
