@@ -41,34 +41,50 @@ InterviewAI is an AI-powered interview preparation platform that helps candidate
 - **Vercel**
 - **Git & GitHub**
 
-## 🔄 How It Works
+<table>
+<tr>
+<td width="50%" valign="top">
 
-```text
-Upload Resume
-      ↓
-Enter Company & Role
-      ↓
-Generate Interview Questions
-      ↓
-Take Timed Interview
-      ↓
-Submit Answers
-      ↓
-AI Evaluation
-      ↓
-Score + Feedback
-## 🌐 Live Demo
+<h2>⚙️ How It Works</h2>
 
-Try InterviewAI here:
+<p>Get started with InterviewAI in simple steps.</p>
 
-https://interview-ai-alpha-fawn.vercel.app
+<p>🔵 <b>1. Upload your resume</b></p>
+<p>🟣 <b>2. Enter company & role</b></p>
+<p>🟢 <b>3. Generate interview questions</b></p>
+<p>🟠 <b>4. Take timed interview</b></p>
+<p>🔴 <b>5. Submit answers</b></p>
+<p>🟣 <b>6. AI evaluation</b></p>
+<p>🟢 <b>7. Score + feedback</b></p>
 
-## 👨‍💻 Creator
+</td>
 
-**Ansh Goyal**
+<td width="50%" valign="top">
 
+<h2>🌐 Live Demo</h2>
+
+<p>Try InterviewAI here:</p>
+
+<p>
+<a href="https://interview-ai-alpha-fawn.vercel.app">
+<b>🚀 Open InterviewAI</b>
+</a>
+</p>
+
+<hr>
+
+<h2>👨‍💻 Creator</h2>
+
+<h2>Ansh Goyal</h2>
+
+<p>
 Designed & Developed using Next.js and Google Gemini.
+</p>
 
----
+<hr>
 
-© 2026 Ansh Goyal. All rights reserved.
+<p>© 2026 Ansh Goyal. All rights reserved.</p>
+
+</td>
+</tr>
+</table>
