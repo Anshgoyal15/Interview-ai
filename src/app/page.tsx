@@ -45,7 +45,7 @@ const [analyzingResume, setAnalyzingResume] = useState(false);
     }
 
     console.log("RESUME ANALYSIS:", data.resumeSummary);
-
+setResumeSummary(data.resumeSummary);
 sessionStorage.setItem("resumeSummary", data.resumeSummary);
 
 alert("Resume analyzed successfully! 🎉");
@@ -63,52 +63,392 @@ alert("Resume analyzed successfully! 🎉");
   const removeResume = () => {
   setResume(null);
   sessionStorage.removeItem("resumeSummary");
-};
+  };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
+      {/* Futuristic background glow */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+  <div className="absolute top-1/3 -right-40 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl" />
+  <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
+</div>
       {/* Navbar */}
-      <nav className="absolute top-0 left-0 w-full px-8 py-6 flex items-center justify-between">
-        <div className="text-xl font-bold">
-          InterviewAI
+<nav className="absolute top-3 left-3 right-3 z-50 rounded-2xl border border-purple-500/30 bg-slate-950/75 backdrop-blur-xl shadow-2xl shadow-purple-950/20">
+  <div className="px-5 md:px-7 py-3 flex items-center justify-between">
+
+    {/* Brand */}
+    <div className="flex items-center gap-3">
+
+      {/* AI Brain */}
+      <div className="w-10 h-10 flex items-center justify-center">
+        <svg
+          viewBox="0 0 48 48"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 h-10"
+        >
+          <path
+            d="M24 7C19 2 11 5 11 11C6 11 4 16 7 20C3 24 6 30 11 30C10 36 15 40 20 38C21 43 27 43 28 38C33 40 38 36 37 30C42 30 45 24 41 20C44 16 42 11 37 11C37 5 29 2 24 7Z"
+            stroke="url(#brainGradient)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+
+          <path
+            d="M24 8V39M17 13C20 15 20 19 18 21M31 13C28 15 28 19 30 21M12 22C16 22 18 25 17 28M36 22C32 22 30 25 31 28"
+            stroke="url(#brainGradient)"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+
+          <defs>
+            <linearGradient
+              id="brainGradient"
+              x1="5"
+              y1="5"
+              x2="43"
+              y2="43"
+            >
+              <stop offset="0%" stopColor="#a855f7" />
+              <stop offset="55%" stopColor="#c084fc" />
+              <stop offset="100%" stopColor="#ec4899" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      {/* Name */}
+      <div className="flex items-center gap-2">
+        <span className="text-xl md:text-2xl font-extrabold tracking-tight">
+          <span className="text-white">Interview</span>
+          <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            AI
+          </span>
+        </span>
+
+        <span className="hidden sm:inline-block text-xs md:text-sm font-medium text-white relative pb-1">
+          by Ansh Goyal
+          <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-gradient-to-r from-purple-400 to-pink-400 rounded-full" />
+        </span>
+
+        <span className="hidden sm:inline text-purple-400 text-xl">
+          ✦
+        </span>
+      </div>
+    </div>
+
+    {/* Navigation */}
+    <div className="hidden md:flex items-center gap-8 text-sm text-slate-300">
+      <a
+        href="#features"
+        className="hover:text-white transition-colors"
+      >
+        Features
+      </a>
+
+      <a
+        href="#how-it-works"
+        className="hover:text-white transition-colors"
+      >
+        How it works
+      </a>
+
+      <a
+        href="#about"
+        className="hover:text-white transition-colors"
+      >
+        About
+      </a>
+    </div>
+
+    {/* Right side */}
+    <div className="flex items-center gap-5">
+
+
+     {/* Theme Toggle */}
+<button
+  className="text-2xl text-white hover:scale-110 transition-transform"
+  aria-label="Toggle theme"
+>
+  
+</button>
+      {/* Login */}
+      <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 px-5 md:px-6 py-2.5 rounded-xl font-semibold text-white shadow-lg shadow-purple-500/25 transition-all duration-300">
+        Login →
+      </button>
+
+    </div>
+
+  </div>
+</nav>
+
+     {/* Hero Section */}
+<section id="how-it-works" className="...">
+
+  <div className="max-w-7xl mx-auto w-full">
+
+    {/* Hero Content */}
+    <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      {/* LEFT SIDE */}
+      <div className="text-left">
+
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/10 text-purple-300 text-sm font-medium mb-6">
+          <span className="w-2 h-2 rounded-full bg-green-400 shadow-lg shadow-green-400/50" />
+          AI-Powered Interview Preparation
         </div>
 
-        <div className="flex items-center gap-8 text-sm text-slate-300">
-          <a href="#">Features</a>
-          <a href="#">How it works</a>
-          <a href="#">About</a>
+        {/* Heading */}
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
 
-          <button className="bg-white text-slate-950 px-4 py-2 rounded-lg font-semibold">
-            Login
+          <span className="text-white">
+            Practice Smarter.
+          </span>
+
+          <br />
+
+          <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+            Get Hired Faster.
+          </span>
+
+        </h1>
+
+        {/* Description */}
+        <p className="mt-7 text-lg md:text-xl text-slate-400 max-w-xl leading-8">
+          Real interview questions. AI-powered feedback.
+          Personalized improvement. All in one place.
+        </p>
+
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-4 mt-8">
+
+          <Link
+            href="/create-kit"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 px-7 py-3.5 rounded-xl font-semibold text-white shadow-xl shadow-purple-500/25 transition-all duration-300"
+          >
+            Start Practicing
+            <span>→</span>
+          </Link>
+
+          <button
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-slate-700 bg-slate-900/70 text-white font-semibold hover:bg-slate-800 transition"
+          >
+            <span>▶</span>
+            Watch Demo
           </button>
+
         </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 pt-32 pb-20">
-        <div className="text-center max-w-3xl mx-auto">
-          <p className="text-purple-400 font-semibold mb-4">
-            AI-POWERED INTERVIEW PREPARATION
+      </div>
+
+
+      {/* RIGHT SIDE — AI VISUAL */}
+      <div className="relative flex items-center justify-center min-h-[480px]">
+
+        {/* Outer Glow */}
+        <div className="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl" />
+
+        {/* Orbital Ring */}
+        <div className="absolute w-[360px] h-[360px] rounded-full border border-purple-500/20" />
+
+        <div className="absolute w-[440px] h-[440px] rounded-full border border-blue-500/10" />
+
+        {/* AI Coach */}
+        <div className="relative z-10">
+
+          <div className="w-48 h-48 md:w-56 md:h-56 rounded-[2.5rem] bg-gradient-to-br from-purple-500 via-blue-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-purple-500/40">
+
+            <div className="w-36 h-36 md:w-44 md:h-44 rounded-[2rem] bg-slate-950/80 flex items-center justify-center backdrop-blur-xl">
+              <span className="text-7xl md:text-8xl">
+                🤖
+              </span>
+            </div>
+
+          </div>
+
+          <div className="text-center mt-6">
+
+            <h2 className="text-2xl font-bold text-white">
+              Your AI Interview Coach
+            </h2>
+
+            <p className="text-slate-400 mt-2">
+              Practice. Improve. Get hired.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        {/* Technical Questions Card */}
+        <div className="absolute top-4 -left-2 md:left-0 lg:-left-8 rounded-2xl border border-purple-500/30 bg-slate-900/80 backdrop-blur-xl px-5 py-4 shadow-xl">
+
+          <div className="flex items-center gap-3">
+
+            <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center text-xl">
+              &lt;/&gt;
+            </div>
+
+            <div>
+              <p className="text-white font-semibold">
+                Technical
+              </p>
+
+              <p className="text-purple-300 text-sm">
+                Questions
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* Behavioral Questions Card */}
+        <div className="absolute top-16 -right-2 md:right-0 lg:-right-8 rounded-2xl border border-blue-500/30 bg-slate-900/80 backdrop-blur-xl px-5 py-4 shadow-xl">
+
+          <div className="flex items-center gap-3">
+
+            <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center text-xl">
+              👥
+            </div>
+
+            <div>
+              <p className="text-white font-semibold">
+                Behavioral
+              </p>
+
+              <p className="text-blue-300 text-sm">
+                Questions
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* Instant Feedback Card */}
+        <div className="absolute bottom-12 -left-2 md:left-0 lg:-left-8 rounded-2xl border border-pink-500/30 bg-slate-900/80 backdrop-blur-xl px-5 py-4 shadow-xl">
+
+          <div className="flex items-center gap-3">
+
+            <div className="w-11 h-11 rounded-xl bg-pink-500/10 flex items-center justify-center text-xl">
+              📊
+            </div>
+
+            <div>
+              <p className="text-white font-semibold">
+                Instant
+              </p>
+
+              <p className="text-pink-300 text-sm">
+                Feedback
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* Progress Card */}
+        <div className="absolute bottom-0 -right-2 md:right-0 lg:-right-8 rounded-2xl border border-blue-500/30 bg-slate-900/80 backdrop-blur-xl px-5 py-4 shadow-xl">
+
+          <div className="flex items-center gap-3">
+
+            <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center text-xl">
+              📈
+            </div>
+
+            <div>
+              <p className="text-white font-semibold">
+                Track
+              </p>
+
+              <p className="text-blue-300 text-sm">
+                Progress
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    {/* Feature Highlights */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-16 max-w-5xl mx-auto">
+
+      <div className="flex items-center gap-4 rounded-2xl border border-purple-500/20 bg-slate-900/60 backdrop-blur-xl p-5">
+        <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-2xl">
+          ⚡
+        </div>
+
+        <div>
+          <p className="font-semibold text-white">
+            Real Questions
           </p>
 
-          <h1 className="text-5xl font-bold tracking-tight mb-6">
-            Prepare smarter.
-            <br />
-            Interview with confidence.
-          </h1>
+          <p className="text-sm text-slate-400">
+            Industry relevant
+          </p>
+        </div>
+      </div>
 
-          <p className="text-slate-400 text-lg mb-8">
-            Create a personalized interview preparation kit based on
-            your job description and company.
+
+      <div className="flex items-center gap-4 rounded-2xl border border-blue-500/20 bg-slate-900/60 backdrop-blur-xl p-5">
+        <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-2xl">
+          📊
+        </div>
+
+        <div>
+          <p className="font-semibold text-white">
+            AI Feedback
           </p>
 
+          <p className="text-sm text-slate-400">
+            Detailed analysis
+          </p>
+        </div>
+      </div>
+
+
+      <div className="flex items-center gap-4 rounded-2xl border border-pink-500/20 bg-slate-900/60 backdrop-blur-xl p-5">
+        <div className="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-2xl">
+          🎯
+        </div>
+
+        <div>
+          <p className="font-semibold text-white">
+            Personalized
+          </p>
+
+          <p className="text-sm text-slate-400">
+            Improve faster
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
           {/* Resume Upload */}
           <div className="max-w-xl mx-auto mb-6">
             <label
               htmlFor="resume-upload"
-              className="block cursor-pointer bg-slate-900 border-2 border-dashed border-slate-700 hover:border-purple-500 rounded-2xl p-8 transition"
+              className="block cursor-pointer rounded-3xl border-2 border-dashed border-purple-500/30 bg-slate-900/70 backdrop-blur-xl px-8 py-12 text-center shadow-2xl shadow-purple-900/10 hover:border-purple-400/60 hover:bg-slate-900 transition-all duration-300"
             >
-              <div className="text-4xl mb-3">
+              <div className="text-5xl mb-4">
                 📄
               </div>
 
@@ -120,9 +460,9 @@ alert("Resume analyzed successfully! 🎉");
                 Upload your resume to personalize your interview preparation.
               </p>
 
-              <span className="inline-block bg-slate-800 hover:bg-slate-700 px-5 py-2 rounded-lg font-semibold">
-                Choose PDF
-              </span>
+              <span className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 px-6 py-3 rounded-xl font-semibold text-white shadow-lg shadow-purple-500/25 transition">
+  Choose PDF 
+</span>
 
               <p className="text-xs text-slate-500 mt-3">
                 PDF files only
@@ -183,20 +523,11 @@ alert("Resume analyzed successfully! 🎉");
       </p>
     </div>
   </div>
-)}
-          </div>
-
-          <Link
-            href="/create-kit"
-            className="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition"
-          >
-            Create Interview Kit
-          </Link>
-        </div>
-      </section>
+)}  
+     </div>
 
       {/* Features Section */}
-      <section className="w-full px-6 py-16">
+      <section id="features" className="w-full px-6 py-16">
         <div className="max-w-6xl mx-auto">
 
           <div className="text-center mb-12">
@@ -264,6 +595,43 @@ alert("Resume analyzed successfully! 🎉");
           </div>
         </div>
       </section>
+      {/* About Section */}
+<section id="about" className="w-full px-6 py-20">
+  <div className="max-w-4xl mx-auto text-center">
+
+    <p className="text-purple-400 font-semibold tracking-widest text-sm mb-4">
+      ABOUT
+    </p>
+
+    <h2 className="text-4xl md:text-5xl font-extrabold text-white">
+      InterviewAI
+    </h2>
+
+    <p className="text-slate-400 mt-5 text-lg">
+      An AI-powered interview preparation platform.
+    </p>
+
+    {/* Your Name */}
+    <div className="mt-10 inline-block">
+      <p className="text-sm text-slate-500 mb-2">
+        Created & Developed by
+      </p>
+
+      <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+        Ansh Goyal
+      </h3>
+
+      <div className="h-1 mt-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
+    </div>
+
+  </div>
+</section>
+{/* Footer */}
+<footer className="border-t border-slate-800 py-6 text-center">
+  <p className="text-sm text-slate-500">
+    © 2026 Ansh Goyal. All rights reserved.
+  </p>
+</footer>
     </main>
   );
 }
