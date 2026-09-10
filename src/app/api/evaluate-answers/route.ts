@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 
 export async function POST(request: Request) {
   try {
@@ -8,6 +9,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Questions and answers are required." },
         { status: 400 }
+      );
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: "GEMINI_API_KEY is not configured." },
+        { status: 500 }
       );
     }
 
@@ -31,7 +39,7 @@ ${answers
 
 For each answer:
 - If the candidate did not provide an answer, give a score of 0.
-- If the answer is very short or meaningless, give a score of 0 to 2.
+- If the answer is very short or meaningless, give a score from 0 to 2.
 - Give a score from 0 to 10 for answered questions.
 - Give short, useful feedback.
 - Consider correctness, relevance, clarity and completeness.
@@ -49,55 +57,58 @@ Return ONLY valid JSON in this exact format:
 Return exactly one object for each question.
 `;
 
-    const ollamaResponse = await fetch(
-      "http://localhost:11434/api/generate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "qwen2.5:0.5b",
-          prompt,
-          stream: false,
-        }),
-      }
-    );
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
 
-    if (!ollamaResponse.ok) {
-      throw new Error("Ollama evaluation request failed.");
-    }
+    let response;
 
-    const data = await ollamaResponse.json();
+try {
+  response = await ai.models.generateContent({
+    model: "gemini-3.7-flash",
+    contents: prompt,
+  });
+} catch (error) {
+  console.log("Gemini 3.7 unavailable. Trying Gemini 3.6...");
 
-    let result = data.response.trim();
+  response = await ai.models.generateContent({
+    model: "gemini-3.6-flash",
+    contents: prompt,
+  });
+}
 
-    result = result.replace(/```json/g, "").replace(/```/g, "").trim();
+    let result = response.text || "";
+
+    result = result
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
 
     const evaluation = JSON.parse(result);
+
     const fixedEvaluation = evaluation.map(
-  (
-    item: { score: number; feedback: string },
-    index: number
-  ) => {
-    const answer = answers[index];
+      (
+        item: { score: number; feedback: string },
+        index: number
+      ) => {
+        const answer = answers[index];
 
-    if (!answer || answer.trim().length < 20) {
-      return {
-        score: 0,
-        feedback: "No answer was provided for this question.",
-      };
-    }
+        if (!answer || answer.trim().length < 20) {
+          return {
+            score: 0,
+            feedback: "No answer was provided for this question.",
+          };
+        }
 
-    return item;
-  }
-);
+        return item;
+      }
+    );
 
     return NextResponse.json({
       evaluation: fixedEvaluation,
     });
   } catch (error) {
-    console.error("EVALUATION ERROR:", error);
+    console.error("GEMINI EVALUATION ERROR:", error);
 
     return NextResponse.json(
       {

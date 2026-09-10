@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { GoogleGenAI } from "@google/genai";
 
 export async function POST(request: Request) {
   try {
@@ -10,6 +11,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Please fill in all required fields." },
         { status: 400 }
+      );
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: "GEMINI_API_KEY is not configured." },
+        { status: 500 }
       );
     }
 
@@ -36,40 +44,34 @@ Requirements:
 - Put each question on a separate line.
 `;
 
-    const ollamaResponse = await fetch(
-      "http://localhost:11434/api/generate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "qwen2.5:0.5b",
-          prompt,
-          stream: false,
-        }),
-      }
-    );
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
 
-    if (!ollamaResponse.ok) {
-      throw new Error("Ollama request failed.");
-    }
+    const response = await ai.models.generateContent({
+      model: "gemini-3.7-flash",
+      contents: prompt,
+    });
 
-    const data = await ollamaResponse.json();
+    const result = response.text || "";
 
-    const questions = data.response
+    const questions = result
       .split("\n")
-      .map((question: string) =>
+      .map((question) =>
         question.replace(/^\s*\d+[\.\)]\s*/, "").trim()
       )
-      .filter((question: string) => question.length > 0)
+      .filter((question) => question.length > 0)
       .slice(0, 10);
+
+    if (questions.length === 0) {
+      throw new Error("Gemini did not generate any questions.");
+    }
 
     return NextResponse.json({
       questions,
     });
   } catch (error) {
-    console.error("OLLAMA ERROR:", error);
+    console.error("GEMINI ERROR:", error);
 
     return NextResponse.json(
       {
