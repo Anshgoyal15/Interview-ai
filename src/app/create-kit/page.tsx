@@ -11,6 +11,7 @@ const [loading, setLoading] = useState(false);
 const [answers, setAnswers] = useState<string[]>([]);
 const [currentQuestion, setCurrentQuestion] = useState(0);
 const [submitted, setSubmitted] = useState(false);
+const [evaluating, setEvaluating] = useState(false);
 const [score, setScore] = useState(0);
 const [feedback, setFeedback] = useState<string[]>([]);
 const [timeLeft, setTimeLeft] = useState(20 * 60);
@@ -39,6 +40,7 @@ useEffect(() => {
   return () => clearInterval(timer);
 }, [generated, submitted]);
 const submitInterview = async () => {
+  setEvaluating(true);
   try {
     const response = await fetch("/api/evaluate-answers", {
       method: "POST",
@@ -83,7 +85,9 @@ const finalScore =
 
     setScore(finalScore);
     setSubmitted(true);
+    setEvaluating(false);
   } catch (error) {
+    setEvaluating(false);
     console.error("SUBMIT ERROR:", error);
 
     alert(
@@ -320,7 +324,7 @@ onChange={(e) => setJobDescription(e.target.value)}
     onClick={submitInterview}
     className="px-5 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-semibold"
   >
-    Submit Interview
+    {evaluating ? "⏳ Evaluating your answers..." : "Submit Interview"}
   </button>
 )}
     </div>

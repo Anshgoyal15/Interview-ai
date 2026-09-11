@@ -29,6 +29,7 @@ const [analyzingResume, setAnalyzingResume] = useState(false);
   }
 
   setResume(file);
+  setAnalyzingResume(true);
 
   try {
     const formData = new FormData();
@@ -47,10 +48,12 @@ const [analyzingResume, setAnalyzingResume] = useState(false);
 
     console.log("RESUME ANALYSIS:", data.resumeSummary);
 setResumeSummary(data.resumeSummary);
+setAnalyzingResume(false);
 sessionStorage.setItem("resumeSummary", data.resumeSummary);
 
 alert("Resume analyzed successfully! 🎉");
   } catch (error) {
+    setAnalyzingResume(false);
     console.error("RESUME ERROR:", error);
 
     alert(
@@ -198,7 +201,7 @@ alert("Resume analyzed successfully! 🎉");
         </div>
 
         {/* Heading */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
 
           <span className="text-white">
             Practice Smarter.
@@ -212,14 +215,14 @@ alert("Resume analyzed successfully! 🎉");
 
         </h1>
 
-        {/* Description */}
-        <p className="mt-7 text-lg md:text-xl text-slate-400 max-w-xl leading-8">
-          Real interview questions. AI-powered feedback.
-          Personalized improvement. All in one place.
-        </p>
+        {/* Description */} 
+        <p className="mt-5 sm:mt-7 text-base sm:text-lg md:text-xl text-slate-400 max-w-xl leading-7 sm:leading-8">
+  Real interview questions. AI-powered feedback.
+  Personalized improvement. All in one place.
+</p>
 
         {/* Buttons */}
-        <div className="flex flex-wrap gap-4 mt-8">
+        <div className="flex flex-wrap gap-3 mt-8">
 
           <Link
             href="/create-kit"
@@ -236,6 +239,14 @@ alert("Resume analyzed successfully! 🎉");
             <span>▶</span>
             ✨ How It Works
           </button>
+          <a
+  href="https://www.youtube.com/watch?v=P5NjkLpllA4"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-purple-500/40 bg-purple-500/10 text-white font-semibold hover:bg-purple-500/20 transition"
+>
+  ▶ Watch Demo
+</a>
 
         </div>
 
@@ -243,7 +254,7 @@ alert("Resume analyzed successfully! 🎉");
 
 
       {/* RIGHT SIDE — AI VISUAL */}
-      <div className="relative flex items-center justify-center min-h-[480px]">
+      <div className="hidden lg:flex relative items-center justify-center min-h-[480px] -mt-10">
 
         {/* Outer Glow */}
         <div className="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl" />
@@ -282,7 +293,7 @@ alert("Resume analyzed successfully! 🎉");
 
 
         {/* Technical Questions Card */}
-        <div className="absolute top-4 -left-2 md:left-0 lg:-left-8 rounded-2xl border border-purple-500/30 bg-slate-900/80 backdrop-blur-xl px-5 py-4 shadow-xl">
+        <div className="absolute top-4 left-2 md:left-0 lg:-left-8 rounded-2xl border border-purple-500/30 bg-slate-900/80 backdrop-blur-xl px-5 py-4 shadow-xl">
 
           <div className="flex items-center gap-3">
 
@@ -435,10 +446,10 @@ alert("Resume analyzed successfully! 🎉");
       </div>
 
     </div>
+    </div>
 
-  </div>
+  </section>
 
-</section>
           {/* Resume Upload */}
           <div className="max-w-xl mx-auto mt-24 mb-6">
             <label
@@ -446,7 +457,7 @@ alert("Resume analyzed successfully! 🎉");
               className="block cursor-pointer rounded-3xl border-2 border-dashed border-purple-500/30 bg-slate-900/70 backdrop-blur-xl px-8 py-12 text-center shadow-2xl shadow-purple-900/10 hover:border-purple-400/60 hover:bg-slate-900 transition-all duration-300"
             >
               <div className="text-5xl mb-4">
-                📄
+                📑
               </div>
 
               <h3 className="text-xl font-semibold mb-2">
@@ -458,7 +469,7 @@ alert("Resume analyzed successfully! 🎉");
               </p>
 
               <span className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 px-6 py-3 rounded-xl font-semibold text-white shadow-lg shadow-purple-500/25 transition">
-  Choose PDF 
+  {analyzingResume ? "⏳ Analyzing your resume..." : "Choose PDF"}
 </span>
 
               <p className="text-xs text-slate-500 mt-3">
