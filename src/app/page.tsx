@@ -254,7 +254,7 @@ alert("Resume analyzed successfully! 🎉");
 
 
       {/* RIGHT SIDE — AI VISUAL */}
-      <div className="hidden lg:flex relative items-center justify-center min-h-[480px] -mt-10">
+      <div className="hidden md:flex relative items-center justify-center min-h-[480px] -mt-10">
 
         {/* Outer Glow */}
         <div className="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl" />
