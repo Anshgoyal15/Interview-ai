@@ -22,8 +22,8 @@ const [analyzingResume, setAnalyzingResume] = useState(false);
     return;
   }
 
-  if (file.size > 4 * 1024 * 1024) {
-    alert("Please upload a PDF smaller than 4 MB.");
+  if (file.size > 2 * 1024 * 1024) {
+    alert("Please upload a PDF smaller than 2 MB.");
     event.target.value = "";
     return;
   }
